@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">AppLockerEco</string>
+    <string name="wellcome_text_btn_skip">Skip</string>
+    <string name="wellcome_text_btn_next">Next</string>
+    <string name="notifi_permisstion_text_title_draw_over_app">Draw over other app</string>
+    <string name="notifi_permisstion_text_body">Tap to grant permisstions</string>
+    <string name="notifi_permisstion_text_title_usager_access">Usager Access</string>
+    <string name="set_pin_confirm_pin_code">Confirm your pin code</string>
+    <string name="notifi_permisstion_text_title_accseccibility">Accessibility</string>
+    <string name="set_pin_txt_body_set_4_pin_code">To lock applications you need to set up PIN code \n (4 number)</string>
+    <string name="set_pin_txt_title_set_up_pin_code">Set up PIN code</string>
+    <string name="set_pin_confirm_pin_code1_2">Enter your PIN code</string>
+    <string name="set_pin_fail_pin_code">Wrong code</string>
+    <string name="list_app_txt_title_locked">Locked Apps</string>
+    <string name="list_app_txt_title_unlock">All Installed &amp; System Apps</string>
+    <string name="request_draw_over">Vẽ trên</string>
+    <string name="content_request_draw_over">Vẽ</string>
+    <string name="title_request_draw_over">Vẽ</string>
+</resources>
