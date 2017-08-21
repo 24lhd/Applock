@@ -37,8 +37,6 @@ import javax.crypto.SecretKey;
  */
 
 public class DemoFingerPoint extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +44,14 @@ public class DemoFingerPoint extends AppCompatActivity {
             initKey();
         }
     }
+
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SECRET_MESSAGE = "Very secret message";
     private static final String KEY_NAME_NOT_INVALIDATED = "key_not_invalidated";
     static final String DEFAULT_KEY_NAME = "default_key";
     private KeyStore mKeyStore;
     private KeyGenerator mKeyGenerator;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initKey() {
         try {

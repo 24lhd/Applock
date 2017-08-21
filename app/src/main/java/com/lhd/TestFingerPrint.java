@@ -16,6 +16,5 @@ public class TestFingerPrint extends AppCompatActivity {
             MyFingerPrint demoFingerPoint = new MyFingerPrint(this);
             demoFingerPoint.initKey();
         }
-
     }
 }

@@ -13,6 +13,8 @@ interface MySQLInter {
 
     public void runQuery(String query);
 
+    public void updateItemApp(String query);
+
     public void removeOneItemApp(String itemApp);
 
     public ArrayList<String> getAllItemApp();

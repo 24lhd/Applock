@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -21,17 +22,16 @@
         <activity
             android:name="com.lhd.mvp.main.MainActivity"
             android:label="@string/app_name">
-
-        </activity>
-
-
-        <service android:name="com.lhd.mvp.toprunapp.StateDeviceService" />
-
-        <activity android:name="com.lhd.Demo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <service android:name="com.lhd.mvp.toprunapp.StateDeviceService" />
+
+        <activity android:name="com.lhd.Demo">
+
         </activity>
         <activity android:name="com.lhd.DemoFingerPoint">
 

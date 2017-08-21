@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.lhd.applock.R;
+import com.lhd.sql.MySQL;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -61,34 +62,34 @@ public class StateDeviceService extends Service {
 
     private static PendingIntent running_intent;
 
-    private static final PendingIntent getRunIntent(Context context) {
+    public static PendingIntent getRunIntent(Context context) {
         if (running_intent == null) {
             Intent intent = new Intent(context, StateDeviceService.class);
-            running_intent = PendingIntent.getService(context, 2500, intent, 0);
+            running_intent = PendingIntent.getService(context, 2017, intent, 0);
         }
         return running_intent;
     }
 
-    private static final void startAlarm(Context context) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+    static AlarmManager alarmManager;
+
+    public static void startAlarm(Context context) {
+        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         PendingIntent pendingIntent = getRunIntent(context);
-        long startTime = SystemClock.elapsedRealtime();
 //        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, startTime, 250, pendingIntent);
 //        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, startTime, 1000, pendingIntent);
-//
 //        alarmManager.set(AlarmManager.RTC_WAKEUP,startTime,pendingIntent);
         if (Build.VERSION.SDK_INT < 23) {
             if (Build.VERSION.SDK_INT >= 19) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime(), pendingIntent);
             } else {
-                alarmManager.set(AlarmManager.ELAPSED_REALTIME, startTime, pendingIntent);
+                alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), pendingIntent);
             }
         } else {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME, startTime, pendingIntent);
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), pendingIntent);
         }
     }
 
-    private static final void stopAlarm(Context c) {
+    public static void stopAlarm(Context c) {
         AlarmManager am = (AlarmManager) c.getSystemService(ALARM_SERVICE);
         am.cancel(getRunIntent(c));
     }
@@ -98,15 +99,13 @@ public class StateDeviceService extends Service {
         listenOnOffSceen();
         unListenOnOffSceen();
         startAlarm(this);
+        MySQL mySQL = new MySQL(this);
         mActivityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         Log.e(StateDeviceService.TAG, "" + getTopTask());
-        if (getTopTask().equals("com.android.chrome") && isShowLock == false) {
+        if (mySQL.isExistsItemApp(getTopTask(), mySQL.getAllItemApp()) && isShowLock == false) {
             showWindowLog();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                initKey();
-
-            }
-        } else if (!getTopTask().equals("com.android.chrome") && isShowLock == true) {
+        }
+        if (!mySQL.isExistsItemApp(getTopTask(), mySQL.getAllItemApp()) && !getTopTask().isEmpty() && isShowLock == true) {
             hideWindowLog();
         }
         return START_NOT_STICKY;
@@ -197,6 +196,7 @@ public class StateDeviceService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unListenOnOffSceen();
+        startAlarm(this);
+//        unListenOnOffSceen();
     }
 }

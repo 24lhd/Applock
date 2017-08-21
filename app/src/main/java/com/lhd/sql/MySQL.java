@@ -1,10 +1,7 @@
 package com.lhd.sql;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
-import android.provider.Settings;
 
 import com.lhd.module.Config;
 
@@ -21,18 +18,20 @@ public class MySQL implements MySQLInter {
 
     @Override
     public void insertOneItemApp(String itemApp) {
+        runQuery(Config.CREATE_TABLE_LIST);
         runQuery("INSERT INTO `app_locked`(`stt`,`package`) VALUES (NULL,'" + itemApp + "');");
     }
 
     public MySQL(Context context) {
         this.context = context;
         duongSQLite = new DuongSQLite();
+        initDatabase(Config.DB_NAME);
     }
 
     @Override
     public void initDatabase(String name) {
-
         duongSQLite.createOrOpenDataBases(context, name);
+        runQuery(Config.CREATE_TABLE_LIST);
     }
 
     @Override
@@ -41,12 +40,18 @@ public class MySQL implements MySQLInter {
     }
 
     @Override
-    public void removeOneItemApp(String itemApp) {
+    public void updateItemApp(String itemApp) {
 
     }
 
     @Override
+    public void removeOneItemApp(String itemApp) {
+        duongSQLite.getDatabase().execSQL("DELETE FROM `app_locked` WHERE `package` IN ('" + itemApp + "');");
+    }
+
+    @Override
     public ArrayList<String> getAllItemApp() {
+
         Cursor cursor = duongSQLite.getDatabase().query(Config.TABLE_LIST, null, null, null, null, null, null);
         cursor.moveToFirst();
         ArrayList<String> strings = new ArrayList<>();

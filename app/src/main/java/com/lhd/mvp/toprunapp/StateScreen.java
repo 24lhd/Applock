@@ -18,7 +18,7 @@ public class StateScreen extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
             Log.e("StateScreen", "Screen ON");
-
+            StateDeviceService.startAlarm(context);
             // Trigger package again
 //            mLastPackageName = "";
 //            startAlarm(AppLockService.this);
@@ -26,6 +26,7 @@ public class StateScreen extends BroadcastReceiver {
         if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
             Log.e("StateScreen", "Screen OFF");
 //            stopAlarm(AppLockService.this);
+            StateDeviceService.stopAlarm(context);
 //            if (mRelockScreenOff) {
 //                lockAll();
 //            }

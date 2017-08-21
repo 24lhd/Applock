@@ -35,7 +35,6 @@ public class Demo extends AppCompatActivity {
         mySQL.initDatabase(Config.DB_NAME);
         mySQL.runQuery(Config.CREATE_TABLE_LIST);
         Log.e("AppCompatActivity", "" + mySQL.isExistsItemApp(packageName, mySQL.getAllItemApp()));
-        mySQL.insertOneItemApp(packageName);
         for (String str : mySQL.getAllItemApp()) {
             Log.e("AppCompatActivity", str);
         }

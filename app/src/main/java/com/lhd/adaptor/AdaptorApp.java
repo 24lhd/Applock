@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lhd.applock.R;
@@ -36,15 +37,33 @@ public class AdaptorApp extends ArrayAdapter<ItemApp> {
         return super.getItem(position);
     }
 
+    ImageView imIconApp, imStateLockApp;
+
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View viewItemApp = View.inflate(context, R.layout.item_app, null);
-        ImageView imIconApp = (ImageView) viewItemApp.findViewById(R.id.item_app_id_im_ic_app);
-        ImageView imStateLockApp = (ImageView) viewItemApp.findViewById(R.id.item_app_id_im_state_app_lock);
+        imIconApp = (ImageView) viewItemApp.findViewById(R.id.item_app_id_im_ic_app);
+        LinearLayout linearLayout = (LinearLayout) viewItemApp.findViewById(R.id.item_app_id_layout_item);
+        imStateLockApp = (ImageView) viewItemApp.findViewById(R.id.item_app_id_im_state_app_lock);
+//        linearLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.e("duong", "onClick");
+//                if (objects.get(position).isLock()) {
+//                    imStateLockApp.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_lock_outline_light_green_a400_36dp));
+//                } else {
+//                    imStateLockApp.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_lock_open_white_36dp));
+//                }
+//            }
+//        });
+        if (objects.get(position).isLock()) {
+            imStateLockApp.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_lock_outline_light_green_a400_36dp));
+        } else {
+            imStateLockApp.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_lock_open_white_36dp));
+        }
         TextView tvTitle = (TextView) viewItemApp.findViewById(R.id.item_app_id_txv_title_app);
         imIconApp.setImageDrawable(objects.get(position).getIconApp());
-        imStateLockApp.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_lock_outline_white_48dp));
         tvTitle.setText(objects.get(position).getNameApp());
         return viewItemApp;
     }
